@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour {
   private CharacterController2D charCon;
   private float move;
-  private bool jump = false;
   // Start is called before the first frame update
   void Start() {
     charCon = GetComponent<CharacterController2D>();
@@ -16,9 +15,8 @@ public class Player : MonoBehaviour {
     move = 0;
     move += (Input.GetKey(KeyCode.A) ? -1 : 0);
     move += (Input.GetKey(KeyCode.D) ? +1 : 0);
-    jump = (Input.GetKey(KeyCode.Space) ? true : false);
   }
   private void FixedUpdate() {
-    charCon.Move(move, false, jump);
+    charCon.Move(move, false);
   }
 }

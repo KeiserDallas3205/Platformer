@@ -59,6 +59,19 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void Update() {
+    // Jump
+    var jumpInput = Input.GetButtonDown("Jump");
+    var jumpInputReleased = Input.GetButtonUp("Jump");
+
+    if (jumpInput && m_Grounded)
+    {
+      m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
+    }
+    if (jumpInputReleased && m_Rigidbody2D.velocity.y > 0)
+    {
+      m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
+    }
+    // Dash     
     var dashInput = Input.GetButtonDown("Dash");
 
     if (dashInput && _canDash){
@@ -109,7 +122,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
 
-  public void Move(float move, bool crouch, bool jump) {
+  public void Move(float move, bool crouch) {
     // If crouching, check to see if the character can stand up
     if (!crouch) {
       // If the character has a ceiling preventing them from standing up, keep them crouching
@@ -162,13 +175,6 @@ public class CharacterController2D : MonoBehaviour {
         Flip();
       }
     }
-    // If the player should jump...
-    if (m_Grounded && jump) {
-      // Add a vertical force to the player.
-      m_Grounded = false;
-      m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-    }
-  
   }
 
 
