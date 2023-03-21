@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class CharacterController2D : MonoBehaviour {
   [SerializeField] private float m_JumpForce = 400f;              // Amount of force added when the player jumps.
@@ -11,12 +12,21 @@ public class CharacterController2D : MonoBehaviour {
   [SerializeField] private Transform m_CeilingCheck;              // A position marking where to check for ceilings
   [SerializeField] private Collider2D m_CrouchDisableCollider;        // A collider that will be disabled when crouching
 
+
   const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
   private bool m_Grounded;            // Whether or not the player is grounded.
   const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
   private Rigidbody2D m_Rigidbody2D;
   private bool m_FacingRight = true;  // For determining which way the player is currently facing.
   private Vector3 m_Velocity = Vector3.zero;
+  private TrailRenderer m_TrailRenderer;
+
+  [Header("Dashing")]
+  [SerializeField] private float _dashingVelocity;
+  [SerializeField] private float _dashingTime = 0.5f;
+  private Vector2 _dashingDir;
+  private bool _isDashing;
+  private bool _canDash = true;
 
   [Header("Events")]
   [Space]
@@ -39,6 +49,7 @@ public class CharacterController2D : MonoBehaviour {
 
   private void Awake() {
     m_Rigidbody2D = GetComponent<Rigidbody2D>();
+    m_TrailRenderer = GetComponent<TrailRenderer>();
 
     if (OnLandEvent == null)
       OnLandEvent = new UnityEvent();
@@ -46,6 +57,40 @@ public class CharacterController2D : MonoBehaviour {
     if (OnCrouchEvent == null)
       OnCrouchEvent = new BoolEvent();
   }
+
+  private void Update() {
+    var dashInput = Input.GetButtonDown("Dash");
+
+    if (dashInput && _canDash){
+      _isDashing = true;
+      _canDash = false;
+      m_TrailRenderer.emitting = true;
+      _dashingDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+      if (_dashingDir == Vector2.zero)
+      {
+        _dashingDir = new Vector2(transform.localScale.x,0);
+      }
+      //add stopping dash
+      StartCoroutine(StopDashing());
+    }
+
+    if (_isDashing){
+      m_Rigidbody2D.velocity = _dashingDir.normalized * _dashingVelocity;
+      return;
+    }
+    if (m_Grounded){
+      _canDash = true;
+    }
+
+  }
+
+  private IEnumerator StopDashing()
+  {
+    yield return new WaitForSeconds(_dashingTime);
+    m_TrailRenderer.emitting = false;
+    _isDashing = false;
+  }
+
 
   private void FixedUpdate() {
     bool wasGrounded = m_Grounded;
@@ -123,6 +168,7 @@ public class CharacterController2D : MonoBehaviour {
       m_Grounded = false;
       m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
     }
+  
   }
 
 

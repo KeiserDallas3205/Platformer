@@ -18,7 +18,6 @@ public class Player : MonoBehaviour {
     move += (Input.GetKey(KeyCode.D) ? +1 : 0);
     jump = (Input.GetKey(KeyCode.Space) ? true : false);
   }
-
   private void FixedUpdate() {
     charCon.Move(move, false, jump);
   }
