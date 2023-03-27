@@ -26,6 +26,10 @@ public class EnemyState : MonoBehaviour
 	public float distFromPlayer;
 	private float xTarget;
 	
+	// Distance enemy will roam/patrol
+	public float patrolDist = 5;
+	
+	
 	// Movement for enemy 
 	private CharacterController2D charCon;
 	
@@ -76,11 +80,13 @@ public class EnemyState : MonoBehaviour
 		
 		// Access the character movements
 		charCon = GetComponent<CharacterController2D>();
+		
         
     }
 
 	private void FixedUpdate(){
 		stateStayMeths[State].Invoke();
+	
 	}
 	
 	private void OnTriggerEnter2D(Collider2D collision){
@@ -111,11 +117,11 @@ public class EnemyState : MonoBehaviour
 	}
 	
 	private void StateEnterPatrolLeft(){
-		xTarget = transform.position.x - 5;
+		xTarget = transform.position.x - patrolDist;
 	}
 	
 	private void StateEnterPatrolRight(){
-		xTarget = transform.position.x + 5;
+		xTarget = transform.position.x + patrolDist;
 	}
 	
 	private void StateEnterChase(){
@@ -177,11 +183,11 @@ public class EnemyState : MonoBehaviour
 	}
 	
 	private void StateExitPatrolLeft(){
-		xTarget = transform.position.x - 5;
+		xTarget = transform.position.x - patrolDist;
 	}
 	
 	private void StateExitPatrolRight(){
-		xTarget = transform.position.x + 5;
+		xTarget = transform.position.x + patrolDist;
 	}
 	
 	private void StateExitChase(){
@@ -198,6 +204,7 @@ public class EnemyState : MonoBehaviour
 			stateEnterMeths[State].Invoke();
 		}
 	}
+	
 
 
 # endregion
