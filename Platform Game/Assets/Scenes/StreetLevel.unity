@@ -95672,6 +95672,7 @@ MonoBehaviour:
   rotationSpeed: 1.9
   hasMaxDistance: 0
   maxDistnace: 20
+  effects: {fileID: 6854032243012078523, guid: a67289aafcf27b94f974d20faea90157, type: 3}
   launchToPoint: 1
   launchType: 0
   launchSpeed: 3

@@ -28,6 +28,9 @@ public class Tutorial_GrapplingGun : MonoBehaviour
     [Header("Distance:")]
     [SerializeField] private bool hasMaxDistance = false;
     [SerializeField] private float maxDistnace = 20;
+	
+	// Particle effect 
+	public GameObject effects;
 
     private enum LaunchType
     {
@@ -124,6 +127,10 @@ public class Tutorial_GrapplingGun : MonoBehaviour
                     grapplePoint = _hit.point;
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;
+					
+					// Add effects
+					var temp = Instantiate(effects, _hit.point, Quaternion.identity);
+					Destroy(temp, 1.0f);
                 }
             }
         }
