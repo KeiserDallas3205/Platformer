@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    public SpriteRenderer character;
-    private Color col;
+    public SpriteRenderer face;
+    public SpriteRenderer body;
+    public SpriteRenderer leftarm;
+    public SpriteRenderer rightarm;
+    public SpriteRenderer leftleg;
+    public SpriteRenderer rightleg;
+    private Color color;
     private float activationTime;
     private bool invisible;
 
 
     void Start()
     {
-        character = GetComponent<SpriteRenderer>();
         activationTime = 0;
         invisible = false;
-        col = character.color;
+        color = body.color;
     }
 
     // Update is called once per frame
     void Update()
     {
         activationTime += Time.deltaTime;
-        if(invisible && activationTime >= 3)
+        if(invisible && activationTime >= 10)
         {
             invisible = false;
-            col.a = 1;
-            character.color = col;
+            color.a = 1;
+            face.color = color;
+            body.color = color;
+            leftarm.color = color;
+            rightarm.color = color;
+            leftleg.color = color;
+            rightleg.color = color;
         } 
     }
 
@@ -36,8 +45,13 @@ public class Powerup : MonoBehaviour
         {
             invisible = true;
             activationTime = 0;
-            col.a = .2f;
-            character.color = col;
+            color.a = .2f;
+            face.color = color;
+            body.color = color;
+            leftarm.color = color;
+            rightarm.color = color;
+            leftleg.color = color;
+            rightleg.color = color;
         }
     }
 }
