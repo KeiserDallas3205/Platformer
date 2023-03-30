@@ -31,7 +31,8 @@ public class Tutorial_GrapplingGun : MonoBehaviour
 	
 	// Particle effect 
 	public GameObject effects;
-
+	// Sound effect
+	public AudioSource aud;
     private enum LaunchType
     {
         Transform_Launch,
@@ -55,6 +56,9 @@ public class Tutorial_GrapplingGun : MonoBehaviour
     {
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
+		
+		// Get grappling sound
+		   aud = GetComponent<AudioSource>();
 
     }
 
@@ -128,7 +132,8 @@ public class Tutorial_GrapplingGun : MonoBehaviour
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;
 					
-					// Add effects
+					// Play sound effects, and show visual effects
+					aud.Play();
 					var temp = Instantiate(effects, _hit.point, Quaternion.identity);
 					Destroy(temp, 1.0f);
                 }

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 // States
 public enum AIState {
 	IDLE,
-	RUN_AWAY,
 	PATROL_RIGHT,
 	PATROL_LEFT,
-	CHASE
+	CAUGHT
 }
 
 
@@ -53,26 +53,23 @@ public class EnemyState : MonoBehaviour
     {
 		stateStayMeths = new Dictionary<AIState, Action>() {
 			{AIState.IDLE, StateStayIdle},
-			{AIState.RUN_AWAY, StateStayRunAway},
 			{AIState.PATROL_RIGHT, StateStayPatrolRight},
 			{AIState.PATROL_LEFT, StateStayPatrolLeft},
-			{AIState.CHASE, StateStayChase},
+			{AIState.CAUGHT, StateStayCaught},
 		};
 		
 		stateEnterMeths = new Dictionary<AIState, Action>() {
 			{AIState.IDLE, StateEnterIdle},
-			{AIState.RUN_AWAY, StateEnterRunAway},
 			{AIState.PATROL_RIGHT, StateEnterPatrolRight},
 			{AIState.PATROL_LEFT, StateEnterPatrolLeft},
-			{AIState.CHASE, StateEnterChase},
+			{AIState.CAUGHT, StateEnterCaught},
 		};
 		
 		stateExitMeths = new Dictionary<AIState, Action>() {
 			{AIState.IDLE, StateExitIdle},
-			{AIState.RUN_AWAY, StateExitRunAway},
 			{AIState.PATROL_RIGHT, StateExitPatrolRight},
 			{AIState.PATROL_LEFT, StateExitPatrolLeft},
-			{AIState.CHASE, StateExitChase},
+			{AIState.CAUGHT, StateExitCaught},
 		};
 		
 		// Set the first state 
@@ -93,14 +90,14 @@ public class EnemyState : MonoBehaviour
 		// If collide w/ player
 		if(collision.CompareTag("Player")){
 			if(State == AIState.PATROL_LEFT || State == AIState.PATROL_RIGHT) {
-				ChangeState(AIState.CHASE);
+				ChangeState(AIState.CAUGHT);
 			}
 		}
 	}
 	
 	private void OnTriggerExit2D(Collider2D collision){
 		if(collision.CompareTag("Player")){
-			if(State == AIState.CHASE){
+			if(State == AIState.CAUGHT){
 				ChangeState(AIState.PATROL_RIGHT);
 			}
 		}
@@ -112,10 +109,6 @@ public class EnemyState : MonoBehaviour
 	private void StateEnterIdle(){
 	
 	}
-	private void StateEnterRunAway(){
-		
-	}
-	
 	private void StateEnterPatrolLeft(){
 		xTarget = transform.position.x - patrolDist;
 	}
@@ -124,7 +117,7 @@ public class EnemyState : MonoBehaviour
 		xTarget = transform.position.x + patrolDist;
 	}
 	
-	private void StateEnterChase(){
+	private void StateEnterCaught(){
 		speed += speedInc;
 	}
 
@@ -136,14 +129,6 @@ public class EnemyState : MonoBehaviour
 		// If on the ground, patrol right
 		if(charCon.IsPlayerOnGround()){
 			ChangeState(AIState.PATROL_RIGHT);
-		}
-	}
-	private void StateStayRunAway(){
-		if(Mathf.Abs(transform.position.x - tfPlayer.position.x) > distFromPlayer) {
-			ChangeState(AIState.PATROL_RIGHT);
-		}
-		else{
-		charCon.Move(speed * Time.fixedDeltaTime,false);
 		}
 	}
 	
@@ -165,11 +150,15 @@ public class EnemyState : MonoBehaviour
 		}
 	}
 	
-	private void StateStayChase(){
+	private void StateStayCaught(){
 		float xPlayerPos = tfPlayer.position.x;
 		float xMyPos = transform.position.x;
+		float yPlayerPos = tfPlayer.position.y;
+		float yMyPos = transform.position.y;
 		float dir = (xPlayerPos - xMyPos) < 0 ? -1 : 1;
 		charCon.Move(dir * speed * Time.fixedDeltaTime,false);
+		SceneManager.LoadScene(2);
+		
 	}
 
 # endregion
@@ -179,10 +168,6 @@ public class EnemyState : MonoBehaviour
 	private void StateExitIdle(){
 	
 	}
-	private void StateExitRunAway(){
-		
-	}
-	
 	private void StateExitPatrolLeft(){
 		xTarget = transform.position.x - patrolDist;
 	}
@@ -191,7 +176,7 @@ public class EnemyState : MonoBehaviour
 		xTarget = transform.position.x + patrolDist;
 	}
 	
-	private void StateExitChase(){
+	private void StateExitCaught(){
 		speed -= speedInc;
 	}
 
