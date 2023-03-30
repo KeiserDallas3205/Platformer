@@ -132,6 +132,7 @@ public class EnemyState : MonoBehaviour
 
 # region State Stay Methods
 	private void StateStayIdle(){
+		
 		// If on the ground, patrol right
 		if(charCon.IsPlayerOnGround()){
 			ChangeState(AIState.PATROL_RIGHT);

@@ -208,6 +208,7 @@ MonoBehaviour:
   speedInc: 10
   distFromPlayer: 0
   patrolDist: 5
+  animator: {fileID: 0}
   tfPlayer: {fileID: 0}
 --- !u!114 &7684571304018991510
 MonoBehaviour:
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332da66ebe4d202419e8ddc4ac91aa06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 400
+  m_JumpForce: 0
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 0
@@ -328,7 +329,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 272556315, guid: 2dfc1f913d50e414486c95a1907e58f1, type: 3}
+  m_Sprite: {fileID: -2080236152, guid: 2dfc1f913d50e414486c95a1907e58f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
