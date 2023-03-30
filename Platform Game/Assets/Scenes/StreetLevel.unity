@@ -32692,6 +32692,7 @@ MonoBehaviour:
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
+  animator: {fileID: 578645557}
 --- !u!96 &578645555
 TrailRenderer:
   serializedVersion: 2
@@ -145689,6 +145690,10 @@ PrefabInstance:
       propertyPath: patrolDist
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7684571304018991510, guid: f88de9a50ffdc0e47a199bc89a453905, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 578645557}
     - target: {fileID: 7684571304018991511, guid: f88de9a50ffdc0e47a199bc89a453905, type: 3}
       propertyPath: m_RootOrder
       value: 1
