@@ -145682,6 +145682,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2105694783}
     m_Modifications:
+    - target: {fileID: 7684571304018991496, guid: f88de9a50ffdc0e47a199bc89a453905, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7684571304018991499, guid: f88de9a50ffdc0e47a199bc89a453905, type: 3}
       propertyPath: m_Name
       value: Spawn Enemy
