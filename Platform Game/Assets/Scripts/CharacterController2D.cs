@@ -39,6 +39,8 @@ public class CharacterController2D : MonoBehaviour {
   public BoolEvent OnCrouchEvent;
   private bool m_wasCrouching = false;
 
+  public Animator animator;
+
   public void SetMovementSmoothing(float value) {
     m_MovementSmoothing = value;
   }
@@ -66,6 +68,7 @@ public class CharacterController2D : MonoBehaviour {
     if (jumpInput && m_Grounded)
     {
       m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
+      animator.SetTrigger("JumpAnim");
     }
     if (jumpInputReleased && m_Rigidbody2D.velocity.y > 0)
     {
